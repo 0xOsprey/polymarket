@@ -15,21 +15,21 @@ async function fetchStats() {
   }
   data = await response.json();
 
-  var response = await fetch("https://clob.polymarket.com/rewards/markets/0x14018049e265a2d88f284be9588e2e3542e3a3df08ccdb344d28355dd7fdd8ef");
+  var response = await fetch("https://clob.polymarket.com/rewards/markets/0xc6485bb7ea46d7bb89beb9c91e7572ecfc72a6273789496f78bc5e989e4d1638");
   if (!response.ok) {
     throw Error(`Failed fetching stats (${response.statusText} - ${response.status})`);
   }
   data2 = await response.json();
   const trump = data["data"][0]["tokens"][0]["price"]*100;
-  const biden = data2["data"][0]["tokens"][0]["price"]*100;
-  const other = 100 - trump - biden;
-  console.log(trump, biden, other)
-  stats.push(trump.toString(), biden.toString(), other.toString())
+  const harris = data2["data"][0]["tokens"][0]["price"]*100;
+  const other = 100 - trump - harris;
+  console.log(trump, harris, other)
+  stats.push(trump.toString(), harris.toString(), other.toString())
   return stats;
 }
 
 function formatCommandSubtitle(jsonStats: string[]) {
-  return `Trump ${jsonStats[0]}% | Biden: ${jsonStats[1]}% | Other: ${jsonStats[2]}%`;
+  return `Trump ${jsonStats[0]}% | Harris: ${jsonStats[1]}% | Other: ${jsonStats[2]}%`;
 }
 
 export default async function command() {
