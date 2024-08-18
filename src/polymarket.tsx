@@ -24,7 +24,7 @@ async function fetchStats() {
   const harris = data2["data"][0]["tokens"][0]["price"]*100;
   const other = 100 - trump - harris;
   console.log(trump, harris, other)
-  stats.push(trump.toString(), harris.toString(), other.toString())
+  stats.push(trump.toFixed(2).toString(), harris.toFixed(2).toString(), other.toFixed(2).toString())
   return stats;
 }
 
