@@ -22,14 +22,14 @@ interface Ticker {
 
 const formatVolumeWithSuffix = (volume: number): string => {
   if (!volume) return "$0";
-  
+
   const formatter = new Intl.NumberFormat("en-US", {
     style: "currency",
     currency: "USD",
     notation: "compact",
     maximumFractionDigits: 1,
   });
-  
+
   return formatter.format(volume);
 };
 
@@ -86,14 +86,11 @@ function MarketList({ ticker }: { ticker: Ticker }) {
               title={market.groupItemTitle || trimQuestion(market.question)}
               accessories={[
                 { text: formatPercentage(firstPrice) },
-                { text: `24h Vol: ${formatVolumeWithSuffix(volume)}` }
+                { text: `24h Vol: ${formatVolumeWithSuffix(volume)}` },
               ]}
               actions={
                 <ActionPanel>
-                  <Action.OpenInBrowser 
-                    title="Open Market" 
-                    url={getMarketUrl(ticker.slug)} 
-                  />
+                  <Action.OpenInBrowser title="Open Market" url={getMarketUrl(ticker.slug)} />
                   <Action.CopyToClipboard
                     title="Copy Market Info"
                     content={`${market.groupItemTitle || market.question}\n${formatPercentage(firstPrice)}\n24h Volume: ${formatVolumeWithSuffix(volume)}`}
@@ -119,7 +116,7 @@ export default function Command() {
     const fetchTickers = async () => {
       try {
         const response = await fetch(
-          "https://gamma-api.polymarket.com/events?limit=50&active=true&archived=false&closed=false&order=volume24hr&ascending=false&offset=0"
+          "https://gamma-api.polymarket.com/events?limit=50&active=true&archived=false&closed=false&order=volume24hr&ascending=false&offset=0",
         );
 
         if (!response.ok) {
@@ -153,10 +150,7 @@ export default function Command() {
           accessories={[{ text: `24h Vol: ${formatVolumeWithSuffix(ticker.volume24hr)}` }]}
           actions={
             <ActionPanel>
-              <Action.Push
-                title="View Markets"
-                target={<MarketList ticker={ticker} />}
-              />
+              <Action.Push title="View Markets" target={<MarketList ticker={ticker} />} />
               <Action.CopyToClipboard
                 title="Copy Market Info"
                 content={`${ticker.title}\n24h Volume: ${formatVolumeWithSuffix(ticker.volume24hr)}\nMarkets: ${ticker.markets.length}`}
